@@ -19,6 +19,7 @@ import argparse
 import trimesh
 from im2mesh.utils import libmcubes
 from im2mesh.utils.libkdtree import KDTree
+import re
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--train',action='store_true', default=False)
@@ -42,11 +43,11 @@ INPUT_DIR = a.data_dir
 #INPUT_DIR = '/home/mabaorui/AtlasNetOwn/data/sphere/'
 OUTPUT_DIR = a.out_dir
 if(a.dataset=="shapenet"):
-    GT_DIR = '/data/mabaorui/project4/data/ShapeNet/' + a.class_idx + '/'
+    GT_DIR = './data/ShapeNet_GT/' + a.class_idx + '/'
 if(a.dataset=="famous"):
-    GT_DIR = '/data1/mabaorui/AtlasNetOwn/data/famous/famous_noisefree/03_meshes/'
+    GT_DIR = './data/famous_noisefree/03_meshes/'
 if(a.dataset=="ABC"):
-    GT_DIR = '/data1/mabaorui/AtlasNetOwn/data/abc_noisefree/03_meshes/'
+    GT_DIR = './data/abc_noisefree/03_meshes/'
 
 TRAIN = a.train
 bd = 0.55
@@ -190,8 +191,7 @@ files = []
 files_path = []
 
 if(a.dataset == "shapenet"):
-    print('iii')
-    f = open('/data1/mabaorui/AtlasNetOwn/data/val.txt','r')
+    f = open('./data/shapenet_val.txt','r')
     for index,line in enumerate(f):
         if(line.strip().split('/')[0]==a.class_idx):
             #print(line)
@@ -199,18 +199,18 @@ if(a.dataset == "shapenet"):
     f.close()
 
 if(a.dataset == "famous"):
-    f = open('/data1/mabaorui/AtlasNetOwn/data/famous/famous_noisefree/testset.txt','r')
+    f = open('./data/famous_testset.txt','r')
     for index,line in enumerate(f):
         #print(line)
         files.append(line.strip('\n'))
     f.close()
     
-if(a.dataset == "ABC"):
-    f = open('/data1/mabaorui/AtlasNetOwn/data/abc_noisefree/testset.txt','r')
-    for index,line in enumerate(f):
-        #print(line)
-        files.append(line.strip('\n'))
-    f.close()
+if(a.dataset == "ABC" or a.dataset == "other"):
+    fileAll = os.listdir(INPUT_DIR)
+    for file in fileAll:
+        if(re.findall(r'.*.npz', file, flags=0)):
+            print(file.strip().split('.')[0])
+            files.append(file.strip().split('.')[0])
 
 for file in files:
     files_path.append(INPUT_DIR + file + '.npz')
@@ -355,7 +355,7 @@ with tf.Session(config=config) as sess:
         cd = 0
         nc = 0
         cd2 = 0
-        #or epoch in range(4,5):
+        #for epoch in range(20):
         for epoch in range(test_num):
             print('test:',epoch)
 #            if(os.path.exists(OUTPUT_DIR + file_test[epoch] + '.npz')):
@@ -394,8 +394,7 @@ with tf.Session(config=config) as sess:
             vox_min = np.min(vox.reshape((-1)))
             print('max_min:',vox_max,vox_min)
             
-            #threshs = [0.0,0.00025,0.0005,0.00075,0.01,0.0125,0.015,0.0175,0.02]
-            threshs = [0.01]
+            threshs = [0.005]
             for thresh in threshs:
                 print(np.sum(vox>thresh),np.sum(vox<thresh))
                 
@@ -428,25 +427,11 @@ with tf.Session(config=config) as sess:
                 mesh.export(OUTPUT_DIR +  '/occn_' + files[epoch] + '_'+ str(thresh) + '.off')
                 
     
-    #            feature_bs = []
-    #            for j in range(vertices.shape[0]):
-    #                t = np.zeros(ONE_HOT)
-    #                t[epoch] = 1
-    #                feature_bs.append(t)
-    #            feature_bs = np.asarray(feature_bs)
-    #            grad_norm_c = sess.run([grad_norm],feed_dict={input_points_3d:vertices.reshape(1,-1,3),feature:feature_bs.reshape(1,-1,ONE_HOT)})
-    #            #print('grad_norm',grad_norm_c)
-    #            grad_norm_c = np.asarray(grad_norm_c)
-    #            #print(grad_norm_c.shape)
-    #            grad_norm_c = grad_norm_c.reshape(-1,3)
-                
-                
-    #            mesh = trimesh.Trimesh(vertices, triangles,
-    #                               vertex_normals=grad_norm_c,
-    #                               process=False)
                 mesh = trimesh.Trimesh(vertices, triangles,
                                    vertex_normals=None,
                                    process=False)
+                if(a.dataset == 'other'):
+                    continue
                 if(a.dataset=="shapenet"):
                     ps, idx = mesh.sample(1000000, return_index=True)
                 else:
@@ -457,8 +442,8 @@ with tf.Session(config=config) as sess:
                 if(a.dataset=="shapenet"):
                     data = np.load(GT_DIR + files[epoch] + '/pointcloud.npz')
                     #data = np.load(file_test[epoch])
-                    pointcloud = data['points'].reshape(1,-1,3)
-                    normal = data['normals'].reshape(1,-1,3)
+                    pointcloud = data['points']
+                    normal = data['normals']
                 else:
                     mesh_gt = trimesh.load(GT_DIR + files[epoch] + '.ply')
                     pointcloud, idx_gt = mesh_gt.sample(10000, return_index=True)
@@ -466,7 +451,7 @@ with tf.Session(config=config) as sess:
                     normal = mesh_gt.face_normals[idx_gt]
                 
                 nc_t,cd_t,cd2_t = eval_pointcloud(ps,pointcloud.astype(np.float32),normals_pred.astype(np.float32),normal.astype(np.float32))
-                #np.savez(OUTPUT_DIR + files[epoch]+ '_'+ str(thresh),pp = ps, np = normals_pred, p = pointcloud[0,:,:], n = normal[0,:,:], nc = nc_t, cd = cd_t, cd2 = cd2_t)
+                np.savez(OUTPUT_DIR + files[epoch]+ '_'+ str(thresh),pp = ps, np = normals_pred, p = pointcloud, n = normal, nc = nc_t, cd = cd_t, cd2 = cd2_t)
                 nc = nc + nc_t
                 cd = cd + cd_t
                 cd2 = cd2 + cd2_t
