@@ -113,6 +113,6 @@ python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precomput
 |out_dir           |store network parameters when training or to load pretrained network parameters when testing.      |
 |class_idx          |the class to train or test when using shapenet dataset, other dataset, default.      |
 |class_name           |the class to train or test when using shapenet dataset, other dataset, default.       |
-|dataset           |shapenet,famous or ABC      |
+|dataset           |shapenet,famous,ABC or other(the dataset yourself)      |
 
 
