@@ -58,6 +58,32 @@ You should then also comment out the `dmc` imports in `im2mesh/config.py`.
 1. You can [download](http://cgcad.thss.tsinghua.edu.cn/liuyushen/index.html) our preprocessed data and pretrained model.
 2. To make it easier for you to test the code, we have prepared exmaple data in the exmaple_data folder.
 
+### Building the dataset
+Alternatively, you can also preprocess the dataset yourself.
+To this end, you have to follow the following steps:
+* Put your own pointcloud files in 'input_dir' folder, each pointcloud file in a separate .xyz.npy file. 
+* Set an empty folder 'out_dir' to place the processed data, note, the folder need to be empty, because this folder will be deleted before the program runs.
+
+You are now ready to build the dataset:
+```
+python sample_query_point --out_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --CUDA 0 --dataset other --input_dir ./data/abc_noisefree/04_pts/ 
+``` 
+
+## Training
+You can train a new network from scratch, run
+1. Surface Reconstruction
+
+```
+python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --train --dataset shapenet
+```
+2. Single Image Reconstruction
+```
+python NeuralPull_SVG.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --train --class_name plane
+```
+3. Train the dataset yourself
+```
+python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --train --dataset other
+```
 
 
 ## Evaluation
@@ -73,18 +99,11 @@ python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precomput
 ```
 python NeuralPull_SVG.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --class_name plane
 ```
+3. Evaluation the dataset yourself
+```
+python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --dataset other
+```
 
-## Training
-You can train a new network from scratch, run
-1. Surface Reconstruction
-
-```
-python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --train --dataset shapenet
-```
-2. Single Image Reconstruction
-```
-python NeuralPull_SVG.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precompute_2/ --out_dir /data1/mabaorui/AtlasNetOwn/plane_cd_sur/ --class_idx 02691156 --train --class_name plane
-```
 ## Script Parameters Explanation
 
 |Parameters  |Description |
