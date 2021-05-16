@@ -274,7 +274,10 @@ g_points = input_points_3d - sdf * grad_norm
 
 #loss = tf.losses.huber_loss(points_target, g_points)
 #loss = chamfer_distance_tf_None(point_target_near, g_points)
-loss = chamfer_distance_tf_None(points_target, g_points)
+#loss = chamfer_distance_tf_None(points_target, g_points)
+l2_loss = tf.norm((points_target-g_points), axis=-1)
+print('l2_loss:',l2_loss)
+loss = tf.reduce_mean(l2_loss)
 
 
 t_vars = tf.trainable_variables()
