@@ -24,7 +24,7 @@ If you find our code or paper useful, please consider citing
 </p>
 
 ## Single Image Reconstruction Demo
-<p align="left">
+<p align="center">
   <img src="img/002.jpg" width="380" />
 </p>
 
