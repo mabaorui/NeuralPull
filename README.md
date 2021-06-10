@@ -115,4 +115,6 @@ python NeuralPull.py --data_dir /data1/mabaorui/AtlasNetOwn/data/plane_precomput
 |class_name           |the class to train or test when using shapenet dataset, other dataset, default.       |
 |dataset           |shapenet,famous,ABC or other(the dataset yourself)      |
 
+## Pytorch implementation of Neural-Pull
 
+Notably, the [code](https://github.com/wzxshhz123/NeuralPull_pytorch) in pytorch implementation is not released by the official lab, it is achieved by @wzxshgz123's diligent work. His intention is only to provide references to researchers who are interested in Pytorch implementation of Neural-Pull. There is no doubt that his unconditional dedication should be appreciated. 
