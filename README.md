@@ -55,7 +55,10 @@ You should then also comment out the `dmc` imports in `im2mesh/config.py`.
 
 ## Dataset and pretrained model
 
-1. You can [download](https://drive.google.com/drive/folders/1qre9mgJNCKiX11HnZO10qMZMmPv_gnh3?usp=sharing) our preprocessed data and pretrained model.
+1. You can [download](https://drive.google.com/drive/folders/1qre9mgJNCKiX11HnZO10qMZMmPv_gnh3?usp=sharing) our preprocessed data and pretrained model.Included in the link:
+   --Our pre-train model on ABC and FAMOUS dataset.
+   --Preprocessing data of ABC and FAMOUS(sample points and ground truth points).
+   --Our reconstruction mesh used NeuralPull.
 2. To make it easier for you to test the code, we have prepared exmaple data in the exmaple_data folder.
 
 ### Building the dataset
