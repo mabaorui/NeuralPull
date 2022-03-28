@@ -9,7 +9,7 @@ If you find our code or paper useful, please consider citing
 
     @inproceedings{NeuralPull,
         title = {Neural-Pull: Learning Signed Distance Functions from Point Clouds by Learning to Pull Space onto Surfaces},
-        author = {Baorui, Ma and Zhizhong, Han and Yu-shen, Liu and Matthias, Zwicker},
+        author = {Baorui, Ma and Zhizhong, Han and Yu-Shen, Liu and Matthias, Zwicker},
         booktitle = {International Conference on Machine Learning (ICML)},
         year = {2021}
     }
