@@ -19,9 +19,9 @@ If you find our code or paper useful, please consider citing
     }
 
 ## Pytorch Version
-This work was originally implemented by tensorflow, we have implemented a pytroch version of Neural-Pull that is easier to use. The pytroch version of Neural-Pull provide references to researchers who are interested in Pytorch, if you are more accessible to the pytorch code, please use [pytorch repository and star it](https://github.com/mabaorui/NeuralPull-Pytorch), thanks.
+This work was originally implemented by tensorflow, we have implemented a pytroch version of Neural-Pull that is easier to use. The pytorch version of Neural-Pull provide references to researchers who are interested in Pytorch, if you are more accessible to the pytorch code, please use [pytorch repository and star it](https://github.com/mabaorui/NeuralPull-Pytorch), thanks.
 
-This pytorch version is the original version provided by [Baorui Ma](https://mabaorui.github.io/), refactored by [JunSun Zhou](https://github.com/junshengzhou) to make it easier to understand.
+This pytorch version is the original version provided by [Baorui Ma](https://mabaorui.github.io/), refactored by [JunSheng Zhou](https://github.com/junshengzhou) to make it easier to understand.
 
 ## Surface Reconstruction Demo
 <p align="left">
