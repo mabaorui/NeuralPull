@@ -1,6 +1,10 @@
 ## Neural-Pull: Learning Signed Distance Functions from Point Clouds by Learning to Pull Space onto Surfaces (ICML 2021)
 
+<h2 align="center"><a href="https://mabaorui.github.io/">Personal Web Pages</a> | <a href="https://github.com/mabaorui/NeuralPull-Pytorch">Pytorch-Version</a></h2>
+
+
 This repository contains the code to reproduce the results from the paper.
+
 [Neural-Pull: Learning Signed Distance Functions from Point Clouds by Learning to Pull Space onto Surfaces](https://arxiv.org/abs/2011.13495).
 
 You can find detailed usage instructions for training your own models and using pretrained models below.
@@ -13,6 +17,11 @@ If you find our code or paper useful, please consider citing
         booktitle = {International Conference on Machine Learning (ICML)},
         year = {2021}
     }
+
+## Pytorch Version
+This work was originally implemented by tensorflow, we have implemented a pytroch version of Neural-Pull that is easier to use. The pytroch version of Neural-Pull provide references to researchers who are interested in Pytorch, if you are more accessible to the pytorch code, please use [pytorch repository and star it](https://github.com/mabaorui/NeuralPull-Pytorch), thanks.
+
+This pytorch version is the original version provided by [Baorui Ma](https://mabaorui.github.io/), refactored by [JunSun Zhou](https://github.com/junshengzhou) to make it easier to understand.
 
 ## Surface Reconstruction Demo
 <p align="left">
